@@ -7,31 +7,33 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import com.example.calculatorplus.R;
-import com.example.calculatorplus.entity.MemberRecord;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MemberFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_member, container, false);
-        initListView(root);
+        initButton(root);
+        initModelView(root);
         return root;
     }
 
-    private void initListView(View view) {
-        List<MemberRecord> records = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            MemberRecord record = new MemberRecord();
-            record.setName("Alan");
-            record.setPhone("666-666-666");
-            record.setState("up");
-            records.add(record);
-        }
+    private void initButton(View view) {
+        FloatingActionButton fab = view.findViewById(R.id.member_add);
+        fab.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.nav_member_edit);
+        });
+    }
+
+    private void initModelView(View view) {
+        MemberViewModel memberViewModel = new ViewModelProvider(this).get(MemberViewModel.class);
         ListView listView = view.findViewById(R.id.member_list);
-        MemberAdapter adapter = new MemberAdapter(view.getContext(), records);
+        MemberAdapter adapter = new MemberAdapter(getActivity());
+        adapter.setRecords(memberViewModel.getLiveData().getValue());
         listView.setAdapter(adapter);
+        memberViewModel.getLiveData().observe(getViewLifecycleOwner(), adapter::setRecords);
     }
 }

@@ -1,26 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
-    <LinearLayout android:layout_width="wrap_content"
+              android:orientation="vertical"
+              tools:context=".ui.member.MemberEditFragment">
+    <LinearLayout android:gravity="center"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+        <TextView android:text="名字"
+                  android:textSize="50dp"
+                  android:gravity="center"
+                  android:layout_width="100dp"
+                  android:layout_height="100dp" />
+    </LinearLayout>
+    <LinearLayout android:gravity="center"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content">
         <TextView android:text="名字"
                   android:textSize="20sp"
                   android:gravity="center"
                   android:layout_width="100dp"
                   android:layout_height="wrap_content" />
-        <EditText android:layout_width="250dp"
+        <EditText android:id="@+id/member_edit_name"
+                  android:layout_width="250dp"
                   android:layout_height="wrap_content" />
     </LinearLayout>
-    <LinearLayout android:layout_width="wrap_content"
+    <LinearLayout android:gravity="center"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content">
         <TextView android:text="电话"
                   android:textSize="20sp"
                   android:gravity="center"
                   android:layout_width="100dp"
                   android:layout_height="wrap_content" />
-        <EditText android:layout_width="250dp"
+        <EditText android:id="@+id/member_edit_phone"
+                  android:layout_width="250dp"
                   android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout android:gravity="center"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+        <Button android:id="@+id/member_save"
+                android:text="保存"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

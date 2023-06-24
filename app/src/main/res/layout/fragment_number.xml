@@ -8,9 +8,9 @@
         android:orientation="vertical"
         tools:context=".ui.number.NumberFragment">
     <ListView android:id="@+id/number_list"
-              android:padding="8dp"
+              android:padding="3dp"
               android:divider="@color/back1"
-              android:dividerHeight="8dp"
+              android:dividerHeight="3dp"
               android:background="@color/back1"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content" />

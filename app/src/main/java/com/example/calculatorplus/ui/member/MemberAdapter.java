@@ -9,15 +9,23 @@ import android.widget.TextView;
 import com.example.calculatorplus.R;
 import com.example.calculatorplus.entity.MemberRecord;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MemberAdapter extends BaseAdapter {
-    private final List<MemberRecord> records;
     private final LayoutInflater inflater;
+    private final List<MemberRecord> records;
 
-    public MemberAdapter(Context context, List<MemberRecord> records) {
-        this.records = records;
+    public MemberAdapter(Context context) {
         inflater = LayoutInflater.from(context);
+        records = new ArrayList<>();
+    }
+
+    public void setRecords(List<MemberRecord> records) {
+        this.records.clear();
+        if (records != null) {
+            this.records.addAll(records);
+        }
     }
 
     @Override

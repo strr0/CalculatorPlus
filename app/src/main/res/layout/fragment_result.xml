@@ -13,66 +13,67 @@
             android:layout_height="wrap_content"
             android:text="Hello World!"/>-->
     <LinearLayout
+            android:background="@color/back4"
             android:layout_width="match_parent"
             android:layout_height="50dp">
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="鼠"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="牛"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="虎"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="兔"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="龙"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="蛇"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
     </LinearLayout>
@@ -81,71 +82,70 @@
             android:layout_width="match_parent"
             android:layout_height="280dp"
             android:gravity="center"
-            android:horizontalSpacing="5dp"
-            android:verticalSpacing="5dp"
             android:numColumns="6"
             android:stretchMode="columnWidth"/>
     <LinearLayout
+            android:background="@color/back4"
             android:layout_width="match_parent"
             android:layout_height="50dp">
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="马"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="羊"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="猴"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="鸡"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="狗"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
         <TextView
                 android:layout_width="0dp"
-                android:layout_height="16dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="猪"
-                android:textSize="12dp"
+                android:textSize="25dp"
                 android:textStyle="normal"
                 android:gravity="center"/>
     </LinearLayout>
@@ -155,8 +155,6 @@
             android:layout_height="280dp"
             android:gravity="center"
             android:columnWidth="45dp"
-            android:horizontalSpacing="5dp"
-            android:verticalSpacing="5dp"
             android:numColumns="6"
             android:stretchMode="columnWidth"/>
 

@@ -10,6 +10,7 @@
     <string name="menu_result">Result</string>
     <string name="menu_number">Number</string>
     <string name="menu_member">Member</string>
+    <string name="menu_member_edit">MemberEdit</string>
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
