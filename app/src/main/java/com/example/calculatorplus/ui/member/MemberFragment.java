@@ -40,7 +40,7 @@ public class MemberFragment extends Fragment {
             adapter.setRecords(records);
             adapter.notifyDataSetChanged();  // 通知ListView刷新
         });
-        // 长按删除按钮
+        // 长按删除事件
         listView.setOnItemLongClickListener((a, v, i, l) -> {
             AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
             // 自定义确认框
@@ -64,6 +64,15 @@ public class MemberFragment extends Fragment {
             dialog.setView(confirm);
             dialog.show();
             return false;
+        });
+        // 点击编辑事件
+        listView.setOnItemClickListener((a, v, i, l) -> {
+            Bundle bundle = new Bundle();
+            MemberRecord record = (MemberRecord) adapter.getItem(i);
+            bundle.putString("id", record.getId().toString());
+            bundle.putString("name", record.getName());
+            bundle.putString("phone", record.getPhone());
+            Navigation.findNavController(v).navigate(R.id.nav_member_edit, bundle);
         });
     }
 }

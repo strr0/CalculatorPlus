@@ -49,6 +49,7 @@ public class MemberAdapter extends BaseAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_member_item, null);
             holder = new ViewHolder();
+            holder.avatar = view.findViewById(R.id.member_avatar);
             holder.name = view.findViewById(R.id.member_name);
             holder.phone = view.findViewById(R.id.member_phone);
             holder.state = view.findViewById(R.id.member_state);
@@ -58,6 +59,7 @@ public class MemberAdapter extends BaseAdapter {
         }
         MemberRecord record = records.get(i);
         if (record != null) {
+            holder.avatar.setText(record.getName().substring(record.getName().length() - 1));
             holder.name.setText(record.getName());
             holder.phone.setText(record.getPhone());
             holder.state.setText(record.getState());
@@ -66,6 +68,7 @@ public class MemberAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
+        public TextView avatar;
         public TextView name;
         public TextView phone;
         public TextView state;

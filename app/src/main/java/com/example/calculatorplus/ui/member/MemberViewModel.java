@@ -28,6 +28,10 @@ public class MemberViewModel extends AndroidViewModel {
         memberRecordDao.inset(record);
     }
 
+    public void update(MemberRecord record) {
+        memberRecordDao.update(record);
+    }
+
     public void remove(MemberRecord record) {
         memberRecordDao.delete(record);
     }
