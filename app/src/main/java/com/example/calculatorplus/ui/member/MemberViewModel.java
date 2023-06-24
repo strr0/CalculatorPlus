@@ -27,4 +27,8 @@ public class MemberViewModel extends AndroidViewModel {
     public void save(MemberRecord record) {
         memberRecordDao.inset(record);
     }
+
+    public void remove(MemberRecord record) {
+        memberRecordDao.delete(record);
+    }
 }

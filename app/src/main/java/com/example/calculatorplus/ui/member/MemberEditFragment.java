@@ -1,12 +1,12 @@
 package com.example.calculatorplus.ui.member;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,23 +31,15 @@ public class MemberEditFragment extends Fragment {
             String name = nameText.getText().toString();
             String phone = phoneText.getText().toString();
             if ("".equals(name)) {
-                showSaveResultDialog("失败");
+                Toast.makeText(getActivity(), "名字不能为空", Toast.LENGTH_LONG).show();
                 return;
             }
             MemberRecord record = new MemberRecord();
             record.setName(name);
             record.setPhone(phone);
             memberViewModel.save(record);
-            showSaveResultDialog("成功");
+            Toast.makeText(getActivity(), "保存成功", Toast.LENGTH_LONG).show();
             Navigation.findNavController(v).popBackStack();
         });
-    }
-
-    private void showSaveResultDialog(String msg) {
-        new AlertDialog.Builder(getActivity())
-                .setTitle("保存结果")
-                .setMessage(msg)
-                .setPositiveButton("确定", null)
-                .show();
     }
 }
