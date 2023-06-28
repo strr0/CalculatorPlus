@@ -9,15 +9,23 @@ import android.widget.TextView;
 import com.example.calculatorplus.R;
 import com.example.calculatorplus.entity.ResultVo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultAdapter extends BaseAdapter {
-    private final List<ResultVo> voList;
     private final LayoutInflater inflater;
+    private final List<ResultVo> voList;
 
-    public ResultAdapter(Context context, List<ResultVo> voList) {
-        this.voList = voList;
+    public ResultAdapter(Context context) {
         inflater = LayoutInflater.from(context);
+        voList = new ArrayList<>();
+    }
+
+    public void setVoList(List<ResultVo> voList) {
+        this.voList.clear();
+        if (voList != null) {
+            this.voList.addAll(voList);
+        }
     }
 
     @Override
@@ -49,6 +57,7 @@ public class ResultAdapter extends BaseAdapter {
         ResultVo vo = voList.get(i);
         if (vo != null) {
             holder.text.setText(vo.getText());
+            view.setBackgroundColor(vo.getColor());
         }
         return view;
     }

@@ -1,5 +1,6 @@
 package com.example.calculatorplus.ui.number;
 
+import android.app.AlertDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,19 +40,28 @@ public class NumberEditFragment extends Fragment {
         Spinner spinner = view.findViewById(R.id.number_edit_spinner);
         Button button = view.findViewById(R.id.number_save);
         button.setOnClickListener(v -> {
-            String time = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
-            MemberRecord item = (MemberRecord) spinner.getSelectedItem();
-            String[] nums = content.getText().toString().split(" ");
-            for (String num : nums) {
-                NumberRecord record = new NumberRecord();
-                record.setMid(item.getId());
-                record.setNumber(Integer.parseInt(num));
-                record.setMoney(100d);
-                record.setTime(time);
-                numberViewModel.save(record);
-            }
-            Toast.makeText(getActivity(), "保存成功", Toast.LENGTH_LONG).show();
-            Navigation.findNavController(v).popBackStack();
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("保存")
+                    .setMessage("是否保存?")
+                    .setPositiveButton("確定", (d, i) -> {
+                        String time = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
+                        MemberRecord item = (MemberRecord) spinner.getSelectedItem();
+                        String[] nums = content.getText().toString().split(" ");
+                        for (String num : nums) {
+                            NumberRecord record = new NumberRecord();
+                            record.setMid(item.getId());
+                            record.setNumber(Integer.parseInt(num));
+                            record.setMoney(100d);
+                            record.setTime(time);
+                            numberViewModel.save(record);
+                        }
+                        Toast.makeText(getActivity(), "保存成功", Toast.LENGTH_LONG).show();
+                        Navigation.findNavController(v).popBackStack();
+                    })
+                    .setNegativeButton("取消", (d, i) -> {
+                        d.dismiss();
+                    }).show();
+
         });
     }
 

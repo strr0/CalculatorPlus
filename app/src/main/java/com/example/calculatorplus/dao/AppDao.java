@@ -31,7 +31,7 @@ public interface AppDao {
 
     // number
     @Query("select * from t_number_record")
-    List<NumberRecord> getNumbers();
+    LiveData<List<NumberRecord>> getNumbers();
 
     @Insert
     ListenableFuture<Void> insertNumbers(NumberRecord ...records);
