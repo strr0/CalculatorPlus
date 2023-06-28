@@ -20,7 +20,7 @@ public class MemberFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_member, container, false);
         initButton(root);
-        initModelView(root);
+        initListView(root);
         return root;
     }
 
@@ -31,7 +31,7 @@ public class MemberFragment extends Fragment {
         });
     }
 
-    private void initModelView(View view) {
+    private void initListView(View view) {
         MemberViewModel memberViewModel = new ViewModelProvider(this).get(MemberViewModel.class);
         ListView listView = view.findViewById(R.id.member_list);
         MemberAdapter adapter = new MemberAdapter(getActivity());

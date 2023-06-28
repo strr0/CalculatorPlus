@@ -1,42 +1,47 @@
 package com.example.calculatorplus.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
-
-@Entity
+@Entity(tableName = "t_number_record")
 public class NumberRecord {
     /**
      * 主键
      */
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "num_id")
     private Integer id;
 
     /**
      * 数字
      */
+    @ColumnInfo(name = "num_number")
     private Integer number;
 
     /**
      * 金额
      */
+    @ColumnInfo(name = "num_money")
     private Double money;
 
     /**
      * 人员Id
      */
+    @ColumnInfo(name = "num_mid")
     private Integer mid;
 
     /**
      * 类型
      */
+    @ColumnInfo(name = "num_type")
     private String type;
 
     /**
      * 时间
      */
-//    private Date time;
+    @ColumnInfo(name = "num_time")
+    private String time;
 
     public Integer getId() {
         return id;
@@ -78,11 +83,11 @@ public class NumberRecord {
         this.type = type;
     }
 
-//    public Date getTime() {
-//        return time;
-//    }
-//
-//    public void setTime(Date time) {
-//        this.time = time;
-//    }
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }

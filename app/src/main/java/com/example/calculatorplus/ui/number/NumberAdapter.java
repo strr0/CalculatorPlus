@@ -11,15 +11,23 @@ import com.example.calculatorplus.R;
 import com.example.calculatorplus.entity.NumberRecord;
 import com.example.calculatorplus.entity.NumberVo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NumberAdapter extends BaseAdapter {
-    private final List<NumberVo> voList;
     private final LayoutInflater inflater;
+    private final List<NumberVo> voList;
 
-    public NumberAdapter(Context context, List<NumberVo> voList) {
-        this.voList = voList;
+    public NumberAdapter(Context context) {
         inflater = LayoutInflater.from(context);
+        voList = new ArrayList<>();
+    }
+
+    public void setVoList(List<NumberVo> voList) {
+        this.voList.clear();
+        if (voList != null) {
+            this.voList.addAll(voList);
+        }
     }
 
     @Override
@@ -45,6 +53,7 @@ public class NumberAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.name = view.findViewById(R.id.number_name);
             holder.totalMoney = view.findViewById(R.id.number_totalMoney);
+            holder.time = view.findViewById(R.id.number_time);
             holder.records = view.findViewById(R.id.number_grid);
             view.setTag(holder);
         } else {
@@ -54,6 +63,7 @@ public class NumberAdapter extends BaseAdapter {
         if (vo != null) {
             holder.name.setText(vo.getName());
             holder.totalMoney.setText(String.valueOf(vo.getTotalMoney()));
+            holder.time.setText(vo.getTime());
             List<NumberRecord> records = vo.getRecords();
             NumberChildAdapter numberChildAdapter = new NumberChildAdapter(view.getContext(), records);
             holder.records.setAdapter(numberChildAdapter);
@@ -64,6 +74,7 @@ public class NumberAdapter extends BaseAdapter {
     static class ViewHolder {
         public TextView name;
         public TextView totalMoney;
+        public TextView time;
         public GridView records;
     }
 }

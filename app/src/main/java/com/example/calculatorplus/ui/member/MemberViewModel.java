@@ -4,20 +4,20 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import com.example.calculatorplus.dao.MemberRecordDao;
-import com.example.calculatorplus.db.MemberRecordDb;
+import com.example.calculatorplus.dao.AppDao;
+import com.example.calculatorplus.db.AppDatabase;
 import com.example.calculatorplus.entity.MemberRecord;
 
 import java.util.List;
 
 public class MemberViewModel extends AndroidViewModel {
-    private final MemberRecordDao memberRecordDao;
+    private final AppDao appDao;
     private final LiveData<List<MemberRecord>> liveData;
 
     public MemberViewModel(@NonNull Application application) {
         super(application);
-        memberRecordDao = MemberRecordDb.getInstance(application).memberRecordDao();
-        liveData = memberRecordDao.getAll();
+        appDao = AppDatabase.getInstance(application).appDao();
+        liveData = appDao.getMembers();
     }
 
     public LiveData<List<MemberRecord>> getLiveData() {
@@ -25,14 +25,14 @@ public class MemberViewModel extends AndroidViewModel {
     }
 
     public void save(MemberRecord record) {
-        memberRecordDao.inset(record);
+        appDao.insetMembers(record);
     }
 
     public void update(MemberRecord record) {
-        memberRecordDao.update(record);
+        appDao.updateMembers(record);
     }
 
     public void remove(MemberRecord record) {
-        memberRecordDao.delete(record);
+        appDao.deleteMembers(record);
     }
 }

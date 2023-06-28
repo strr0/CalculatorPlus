@@ -18,6 +18,12 @@
             tools:layout="@layout/fragment_number"/>
 
     <fragment
+            android:id="@+id/nav_number_edit"
+            android:name="com.example.calculatorplus.ui.number.NumberEditFragment"
+            android:label="@string/menu_number_edit"
+            tools:layout="@layout/fragment_number_edit"/>
+
+    <fragment
             android:id="@+id/nav_member"
             android:name="com.example.calculatorplus.ui.member.MemberFragment"
             android:label="@string/menu_member"

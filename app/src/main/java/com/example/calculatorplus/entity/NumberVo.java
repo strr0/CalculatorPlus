@@ -4,9 +4,19 @@ import java.util.List;
 
 public class NumberVo {
     /**
+     * 用户Id
+     */
+    private Integer mid;
+
+    /**
      * 姓名
      */
     private String name;
+
+    /**
+     * 时间
+     */
+    private String time;
 
     /**
      * 总金额
@@ -18,12 +28,28 @@ public class NumberVo {
      */
     private List<NumberRecord> records;
 
+    public Integer getMid() {
+        return mid;
+    }
+
+    public void setMid(Integer mid) {
+        this.mid = mid;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public Double getTotalMoney() {
