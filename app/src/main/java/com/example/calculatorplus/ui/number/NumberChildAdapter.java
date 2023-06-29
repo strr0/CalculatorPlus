@@ -9,15 +9,33 @@ import android.widget.TextView;
 import com.example.calculatorplus.R;
 import com.example.calculatorplus.entity.NumberRecord;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NumberChildAdapter extends BaseAdapter {
-    private final List<NumberRecord> records;
     private final LayoutInflater inflater;
+    private final List<NumberRecord> records;
 
-    public NumberChildAdapter(Context context, List<NumberRecord> records) {
-        this.records = records;
+    public NumberChildAdapter(Context context) {
         inflater = LayoutInflater.from(context);
+        records = new ArrayList<>();
+    }
+
+    public void setRecords(List<NumberRecord> records) {
+        this.records.clear();
+        if (records != null) {
+            this.records.addAll(records);
+        }
+    }
+
+    public void addRecords(List<NumberRecord> records) {
+        if (records != null) {
+            this.records.addAll(records);
+        }
+    }
+
+    public List<NumberRecord> getRecords() {
+        return records;
     }
 
     @Override

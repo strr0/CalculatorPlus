@@ -26,7 +26,10 @@ public class NumberViewModel extends AndroidViewModel {
         return liveData;
     }
 
-    public void save(NumberRecord record) {
-        appDao.insertNumbers(record);
+    public void save(List<NumberRecord> records) {
+        if (records == null || records.isEmpty()) {
+            return;
+        }
+        appDao.insertNumbers(records.toArray(new NumberRecord[0]));
     }
 }

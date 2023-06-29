@@ -54,7 +54,7 @@ public class NumberAdapter extends BaseAdapter {
             holder.name = view.findViewById(R.id.number_name);
             holder.totalMoney = view.findViewById(R.id.number_totalMoney);
             holder.time = view.findViewById(R.id.number_time);
-            holder.records = view.findViewById(R.id.number_grid);
+            holder.grid = view.findViewById(R.id.number_grid);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -65,8 +65,9 @@ public class NumberAdapter extends BaseAdapter {
             holder.totalMoney.setText(String.valueOf(vo.getTotalMoney()));
             holder.time.setText(vo.getTime());
             List<NumberRecord> records = vo.getRecords();
-            NumberChildAdapter numberChildAdapter = new NumberChildAdapter(view.getContext(), records);
-            holder.records.setAdapter(numberChildAdapter);
+            NumberChildAdapter childAdapter = new NumberChildAdapter(view.getContext());
+            childAdapter.setRecords(records);
+            holder.grid.setAdapter(childAdapter);
         }
         return view;
     }
@@ -75,6 +76,6 @@ public class NumberAdapter extends BaseAdapter {
         public TextView name;
         public TextView totalMoney;
         public TextView time;
-        public GridView records;
+        public GridView grid;
     }
 }

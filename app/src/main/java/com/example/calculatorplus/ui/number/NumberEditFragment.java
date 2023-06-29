@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -22,21 +19,60 @@ import com.example.calculatorplus.ui.member.MemberViewModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class NumberEditFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_number_edit, container, false);
-        initSaveButton(root);
+        initGridView(root);
+        initParseButton(root);
         initSpinner(root);
+        initSaveButton(root);
         return root;
     }
 
+    private void initGridView(View view) {
+        GridView gridView = view.findViewById(R.id.number_edit_grid);
+        NumberChildAdapter adapter = new NumberChildAdapter(getActivity());
+        gridView.setAdapter(adapter);
+    }
+
+    private void initParseButton(View view) {
+        Pattern pattern = Pattern.compile("\\d+");
+        GridView gridView = view.findViewById(R.id.number_edit_grid);
+        NumberChildAdapter adapter = (NumberChildAdapter) gridView.getAdapter();
+        EditText content = view.findViewById(R.id.number_edit_content);
+        Button button = view.findViewById(R.id.number_parse);
+        button.setOnClickListener(v -> {
+            Matcher matcher = pattern.matcher(content.getText().toString());
+            List<NumberRecord> records = new ArrayList<>();
+            NumberRecord record = null;
+            while (matcher.find()) {
+                if (record == null) {
+                    record = new NumberRecord();
+                    record.setNumber(Integer.parseInt(matcher.group()));
+                } else {
+                    record.setMoney(Double.parseDouble(matcher.group()));
+                    records.add(record);
+                    record = null;
+                }
+            }
+            adapter.addRecords(records);
+            adapter.notifyDataSetChanged();
+        });
+    }
+
+    // 保存按鈕
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initSaveButton(View view) {
         NumberViewModel numberViewModel = new ViewModelProvider(this).get(NumberViewModel.class);
-        EditText content = view.findViewById(R.id.number_edit_content);
+        GridView gridView = view.findViewById(R.id.number_edit_grid);
+        NumberChildAdapter adapter = (NumberChildAdapter) gridView.getAdapter();
         Spinner spinner = view.findViewById(R.id.number_edit_spinner);
         Button button = view.findViewById(R.id.number_save);
         button.setOnClickListener(v -> {
@@ -46,15 +82,12 @@ public class NumberEditFragment extends Fragment {
                     .setPositiveButton("確定", (d, i) -> {
                         String time = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
                         MemberRecord item = (MemberRecord) spinner.getSelectedItem();
-                        String[] nums = content.getText().toString().split(" ");
-                        for (String num : nums) {
-                            NumberRecord record = new NumberRecord();
+                        List<NumberRecord> records = adapter.getRecords();
+                        records.forEach(record -> {
                             record.setMid(item.getId());
-                            record.setNumber(Integer.parseInt(num));
-                            record.setMoney(100d);
                             record.setTime(time);
-                            numberViewModel.save(record);
-                        }
+                        });
+                        numberViewModel.save(records);
                         Toast.makeText(getActivity(), "保存成功", Toast.LENGTH_LONG).show();
                         Navigation.findNavController(v).popBackStack();
                     })
@@ -65,6 +98,7 @@ public class NumberEditFragment extends Fragment {
         });
     }
 
+    // 下拉框
     private void initSpinner(View view) {
         MemberViewModel memberViewModel = new ViewModelProvider(this).get(MemberViewModel.class);
         Spinner spinner = view.findViewById(R.id.number_edit_spinner);
