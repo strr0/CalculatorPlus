@@ -63,7 +63,7 @@ public class MemberFragment extends Fragment {
             });
             dialog.setView(confirm);
             dialog.show();
-            return false;
+            return true;
         });
         // 点击编辑事件
         listView.setOnItemClickListener((a, v, i, l) -> {
