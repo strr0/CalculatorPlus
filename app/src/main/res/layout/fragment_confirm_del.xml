@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView android:text="确认删除?"
+              android:gravity="center"
+              android:layout_width="match_parent"
+              android:layout_height="50sp" />
+    <LinearLayout android:gravity="center"
+                  android:layout_marginHorizontal="20dp"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+        <TextView android:text="请输入密码"
+                  android:layout_width="80dp"
+                  android:layout_height="wrap_content" />
+        <EditText android:id="@+id/confirm_del_pwd"
+                  android:inputType="textPassword"
+                  android:layout_width="220dp"
+                  android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout android:gravity="center_horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+        <Button android:id="@+id/confirm_del_ok"
+                android:text="确认"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        <Button android:id="@+id/confirm_del_cancel"
+                android:text="取消"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

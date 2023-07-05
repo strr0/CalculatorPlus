@@ -17,13 +17,13 @@ public interface AppDao {
     LiveData<List<MemberRecord>> getMembers();
 
     @Insert
-    ListenableFuture<Void> insetMembers(MemberRecord...records);
+    ListenableFuture<Void> insetMember(MemberRecord record);
 
     @Update
-    ListenableFuture<Void> updateMembers(MemberRecord...records);
+    ListenableFuture<Void> updateMember(MemberRecord record);
 
     @Delete
-    ListenableFuture<Void> deleteMembers(MemberRecord...records);
+    ListenableFuture<Void> deleteMember(MemberRecord record);
 
     // money
     @Query("select * from t_money_record")
@@ -34,15 +34,19 @@ public interface AppDao {
     LiveData<List<NumberRecord>> getNumbers();
 
     @Insert
-    ListenableFuture<Void> insertNumbers(NumberRecord ...records);
+    ListenableFuture<Void> insertNumber(NumberRecord record);
 
     @Update
-    ListenableFuture<Void> updateNumbers(NumberRecord ...records);
+    ListenableFuture<Void> updateNumber(NumberRecord record);
 
     @Delete
-    ListenableFuture<Void> deleteNumbers(NumberRecord ...records);
+    ListenableFuture<Void> deleteNumber(NumberRecord record);
 
     @Query("select * from t_member_record m " +
             "left join t_number_record n on m.mem_id = n.num_mid")
     LiveData<Map<MemberRecord, List<NumberRecord>>> getMemNumbers();
+
+    @Query("select * from t_number_record m " +
+            "where m.num_mid = :mid and m.num_time = :time")
+    LiveData<List<NumberRecord>> getNumberByMen(Integer mid, String time);
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.example.calculatorplus.dao.AppDao;
 import com.example.calculatorplus.db.AppDatabase;
 import com.example.calculatorplus.entity.MemberRecord;
+import com.example.calculatorplus.entity.NumberRecord;
 
 import java.util.List;
 
@@ -25,14 +26,18 @@ public class MemberViewModel extends AndroidViewModel {
     }
 
     public void save(MemberRecord record) {
-        appDao.insetMembers(record);
+        appDao.insetMember(record);
     }
 
     public void update(MemberRecord record) {
-        appDao.updateMembers(record);
+        appDao.updateMember(record);
     }
 
     public void remove(MemberRecord record) {
-        appDao.deleteMembers(record);
+        appDao.deleteMember(record);
+    }
+
+    public LiveData<List<NumberRecord>> getNumberLiveData(Integer mid, String time) {
+        return appDao.getNumberByMen(mid, time);
     }
 }

@@ -60,5 +60,13 @@ public class NumberFragment extends Fragment {
             adapter.setVoList(voList);
             adapter.notifyDataSetChanged();
         });
+        // 点击事件
+        listView.setOnItemClickListener((a, v, i, l) -> {
+            Bundle bundle = new Bundle();
+            NumberVo vo = (NumberVo) adapter.getItem(i);
+            bundle.putInt("mid", vo.getMid());
+            bundle.putString("time", vo.getTime());
+            Navigation.findNavController(v).navigate(R.id.nav_number_edit, bundle);
+        });
     }
 }

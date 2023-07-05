@@ -27,9 +27,19 @@ public class NumberViewModel extends AndroidViewModel {
     }
 
     public void save(List<NumberRecord> records) {
-        if (records == null || records.isEmpty()) {
+        if (records == null) {
             return;
         }
-        appDao.insertNumbers(records.toArray(new NumberRecord[0]));
+        for (NumberRecord record : records) {
+            if (record.getId() != null) {
+                appDao.updateNumber(record);
+            } else {
+                appDao.insertNumber(record);
+            }
+        }
+    }
+
+    public void remove(NumberRecord record) {
+        appDao.deleteNumber(record);
     }
 }

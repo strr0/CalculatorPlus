@@ -34,6 +34,12 @@ public class NumberChildAdapter extends BaseAdapter {
         }
     }
 
+    public void removeRecord(int i) {
+        if (i < records.size()) {
+            records.remove(i);
+        }
+    }
+
     public List<NumberRecord> getRecords() {
         return records;
     }
