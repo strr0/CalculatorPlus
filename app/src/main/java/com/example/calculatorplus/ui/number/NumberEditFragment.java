@@ -1,23 +1,40 @@
 package com.example.calculatorplus.ui.number;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import com.baidu.ocr.sdk.OCR;
+import com.baidu.ocr.sdk.OnResultListener;
+import com.baidu.ocr.sdk.exception.OCRError;
+import com.baidu.ocr.sdk.model.OcrRequestParams;
+import com.baidu.ocr.sdk.model.OcrResponseResult;
 import com.example.calculatorplus.R;
 import com.example.calculatorplus.entity.MemberRecord;
 import com.example.calculatorplus.entity.NumberRecord;
+import com.example.calculatorplus.ui.camera.CameraActivity;
 import com.example.calculatorplus.ui.member.MemberViewModel;
+import com.example.calculatorplus.ui.util.FileUtil;
 import com.example.calculatorplus.view.DeleteAlertDialog;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,11 +43,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NumberEditFragment extends Fragment {
+    private static final int REQUEST_CODE_PICK_IMAGE = 201;
+    private static final int REQUEST_CODE_CAMERA = 102;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_number_edit, container, false);
         initGridView(root);
+        initCameraButton(root);
+        initGalleryButton(root);
         initParseButton(root);
         initClearButton(root);
         initSpinner(root);
@@ -86,6 +108,27 @@ public class NumberEditFragment extends Fragment {
             cancel.setOnClickListener(v2 -> dialog.dismiss());
             dialog.setView(edit);
             dialog.show();
+        });
+    }
+
+    private void initCameraButton(View view) {
+        Button button = view.findViewById(R.id.number_carema);
+        button.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CameraActivity.class);
+            intent.putExtra(CameraActivity.KEY_OUTPUT_FILE_PATH,
+                    FileUtil.getSaveFile(getActivity()).getAbsolutePath());
+            startActivityForResult(intent, REQUEST_CODE_CAMERA);
+        });
+    }
+
+    private void initGalleryButton(View view) {
+        Button button = view.findViewById(R.id.number_gallery);
+        button.setOnClickListener(v -> {
+            if (checkGalleryPermission()) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
+            }
         });
     }
 
@@ -191,5 +234,71 @@ public class NumberEditFragment extends Fragment {
             adapter.setRecords(records);
             adapter.notifyDataSetChanged();
         });
+    }
+
+    private boolean checkGalleryPermission() {
+        int ret = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission
+                .READ_EXTERNAL_STORAGE);
+        if (ret != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                    1000);
+            return false;
+        }
+        return true;
+    }
+
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getActivity().getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
+
+    private void recWrittenText(String filePath) {
+        EditText content = getView().findViewById(R.id.number_edit_content);
+        OcrRequestParams param = new OcrRequestParams();
+        param.setImageFile(new File(filePath));
+        OCR.getInstance(getActivity()).recoginzeWrittenText(param, new OnResultListener<OcrResponseResult>() {
+            @Override
+            public void onResult(OcrResponseResult result) {
+                Toast.makeText(getActivity(), "识别成功", Toast.LENGTH_LONG).show();
+                content.setText(result.getJsonRes());
+            }
+
+            @Override
+            public void onError(OCRError error) {
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            Uri uri = data.getData();
+            String filePath = getRealPathFromURI(uri);
+            recWrittenText(filePath);
+        }
+
+        if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                String contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE);
+                String filePath = FileUtil.getSaveFile(getActivity()).getAbsolutePath();
+                if (!TextUtils.isEmpty(contentType)) {
+                    if (CameraActivity.CONTENT_TYPE_GENERAL.equals(contentType)) {
+                        recWrittenText(filePath);
+                    }
+                }
+            }
+        }
     }
 }

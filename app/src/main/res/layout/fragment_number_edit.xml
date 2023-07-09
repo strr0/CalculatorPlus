@@ -32,6 +32,14 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
+            <Button android:id="@+id/number_carema"
+                    android:text="拍照"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            <Button android:id="@+id/number_gallery"
+                    android:text="相册"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             <Button android:id="@+id/number_parse"
                     android:text="解析"
                     android:layout_width="wrap_content"
