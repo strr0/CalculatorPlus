@@ -33,6 +33,9 @@ import com.example.calculatorplus.ui.camera.CameraActivity;
 import com.example.calculatorplus.ui.member.MemberViewModel;
 import com.example.calculatorplus.ui.util.FileUtil;
 import com.example.calculatorplus.view.DeleteAlertDialog;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -269,8 +272,20 @@ public class NumberEditFragment extends Fragment {
         OCR.getInstance(getActivity()).recoginzeWrittenText(param, new OnResultListener<OcrResponseResult>() {
             @Override
             public void onResult(OcrResponseResult result) {
-                Toast.makeText(getActivity(), "识别成功", Toast.LENGTH_LONG).show();
-                content.setText(result.getJsonRes());
+                try {
+                    StringBuilder sb = new StringBuilder();
+                    JSONObject jsonRes = new JSONObject(result.getJsonRes());
+                    JSONArray wordsResult = jsonRes.getJSONArray("words_result");
+                    int wordsResultNum = wordsResult.length();
+                    for (int i = 0; i < wordsResultNum; i++) {
+                        sb.append(wordsResult.getJSONObject(i).getString("words") + '\t');
+                    }
+                    content.setText(sb.toString());
+                    Toast.makeText(getActivity(), "识别成功", Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
